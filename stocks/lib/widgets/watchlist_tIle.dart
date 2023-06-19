@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class WishListTile extends StatelessWidget {
+class WatchlistTile extends StatelessWidget {
   final String compname;
-  const WishListTile({super.key, required this.compname});
+  const WatchlistTile({super.key, required this.compname});
 
   @override
   Widget build(BuildContext context) {
