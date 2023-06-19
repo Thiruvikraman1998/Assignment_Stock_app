@@ -7,11 +7,19 @@ class WishListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(compname),
-      trailing: IconButton(
-        onPressed: () {},
-        icon: const Icon(Icons.delete_forever_outlined),
-      ),
-    );
+        title: Text(compname),
+        trailing: SizedBox(
+          width: 150,
+          child: Row(
+            children: [
+              const Text('price'),
+              const Spacer(),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.delete_forever_outlined),
+              )
+            ],
+          ),
+        ));
   }
 }
