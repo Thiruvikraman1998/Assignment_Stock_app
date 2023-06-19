@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:stocks/widgets/watchlist_tIle.dart';
 
 class WatchListScreen extends StatelessWidget {
@@ -73,6 +74,8 @@ class WatchListScreen extends StatelessWidget {
                 ],
               ),
             ),
+
+            // Added list of watchlist items
             Expanded(
               child: ListView.builder(
                 itemCount: comps.length,
