@@ -7,7 +7,10 @@ class WatchlistTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        title: Text(compname),
+        title: Text(
+          compname,
+          style: const TextStyle(color: Colors.white),
+        ),
         trailing: SizedBox(
           width: 150,
           child: Row(
@@ -16,7 +19,8 @@ class WatchlistTile extends StatelessWidget {
               const Spacer(),
               IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.delete_forever_outlined),
+                icon: const Icon(Icons.delete_forever_outlined,
+                    color: Color(0xFFAD4C41)),
               )
             ],
           ),

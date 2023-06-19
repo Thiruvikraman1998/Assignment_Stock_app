@@ -9,8 +9,13 @@ class WatchListScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final List comps = ['IBM', 'TCS', 'Reliance', 'Apple', 'Google', 'Wipro'];
     return Scaffold(
+      backgroundColor: const Color(0xff2C2E3B),
       appBar: AppBar(
-        title: const Text('Watchlist'),
+        backgroundColor: const Color(0xff2C2E3B),
+        title: const Text(
+          'Watchlist',
+          style: TextStyle(color: Colors.white),
+        ),
         centerTitle: true,
       ),
       body: Container(
@@ -39,7 +44,7 @@ class WatchListScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               height: size.height * 0.04,
-              color: Colors.purple[100],
+              color: const Color(0xFF2F3044),
               child: const Row(
                 //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -47,8 +52,10 @@ class WatchListScreen extends StatelessWidget {
                     flex: 1,
                     child: Text(
                       'Company Name',
-                      style:
-                          TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 15,
+                          color: Colors.white),
                     ),
                   ),
                   Flexible(
@@ -57,7 +64,9 @@ class WatchListScreen extends StatelessWidget {
                       child: Text(
                         'Price',
                         style: TextStyle(
-                            fontWeight: FontWeight.w700, fontSize: 15),
+                            fontWeight: FontWeight.w700,
+                            fontSize: 15,
+                            color: Colors.white),
                       ),
                     ),
                   )
@@ -74,6 +83,7 @@ class WatchListScreen extends StatelessWidget {
                         compname: comps[index],
                       ),
                       const Divider(
+                        thickness: 0.2,
                         indent: 13,
                         endIndent: 15,
                       )
