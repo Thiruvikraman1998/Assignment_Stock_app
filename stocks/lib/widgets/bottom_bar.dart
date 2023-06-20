@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:stocks/functions/search_api_fetch.dart';
+import 'package:stocks/models/search_results_model.dart';
 import 'package:stocks/screens/home_screen.dart';
 import 'package:stocks/screens/watchlist_screen.dart';
 
