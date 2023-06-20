@@ -6,9 +6,11 @@ import 'package:stocks/utils/constants.dart';
 
 import '../models/search_results_model.dart';
 
-Future<SearchResults> fetchSearchResults() async {
+Future<SearchResults> fetchSearchResults(String searchText) async {
+  final keywords = searchText;
   try {
-    final response = await http.get(Uri.parse(searchUrl));
+    final response = await http.get(Uri.parse(
+        "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=$keywords&apikey=G09OFK3V93LN6NU2"));
     if (response.statusCode == 200) {
       debugPrint(response.body);
       return SearchResults.fromJson(jsonDecode(response.body));

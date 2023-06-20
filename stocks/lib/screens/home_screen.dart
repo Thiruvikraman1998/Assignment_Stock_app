@@ -16,9 +16,6 @@ class HomeScreen extends StatelessWidget {
         child: const Column(
           children: [
             SearchField(),
-            Center(
-              child: Text('Search Data to Add to your Watch List'),
-            )
           ],
         ),
       ),
