@@ -59,8 +59,4 @@ class _SearchListTileState extends State<SearchListTile> {
       },
     );
   }
-
-  // Future<void> deleteWatchListFromSearch(CompanyInfo companyInfo) async {
-  //   companyInfo.delete();
-  // }
 }
