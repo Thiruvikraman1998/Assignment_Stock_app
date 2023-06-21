@@ -10,5 +10,8 @@ class CompanyInfo extends HiveObject {
   @HiveField(1)
   String? compSymbol;
 
-  CompanyInfo({this.compName, this.compSymbol});
+  @HiveField(2)
+  String? price;
+
+  CompanyInfo({this.compName, this.compSymbol, this.price});
 }

@@ -22,12 +22,17 @@ class WatchlistTile extends StatelessWidget {
         width: 150,
         child: Row(
           children: [
-            const Text('price'),
+            Text(
+              companyInfo.price!,
+              style: const TextStyle(color: Colors.white),
+            ),
             const Spacer(),
             IconButton(
               onPressed: () {},
-              icon: const Icon(Icons.delete_forever_outlined,
-                  color: Color(0xFFAD4C41)),
+              icon: const Icon(
+                Icons.delete_forever_outlined,
+                color: Color(0xFFAD4C41),
+              ),
             )
           ],
         ),

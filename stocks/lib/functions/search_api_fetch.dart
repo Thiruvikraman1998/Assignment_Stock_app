@@ -8,11 +8,13 @@ import '../models/search_results_model.dart';
 
 Future<SearchResults> fetchSearchResults(String searchText) async {
   final keywords = searchText;
+  var u = Uri.parse(
+      "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=$keywords&apikey=JWD65CRD17BR4ZX2");
   try {
-    final response = await http.get(Uri.parse(
-        "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=$keywords&apikey=G09OFK3V93LN6NU2"));
+    debugPrint(u.toString());
+    final response = await http.get(u);
+
     if (response.statusCode == 200) {
-      debugPrint(response.body);
       return SearchResults.fromJson(jsonDecode(response.body));
     }
   } catch (e) {

@@ -4,6 +4,8 @@ import 'package:stocks/functions/search_api_fetch.dart';
 import 'package:stocks/models/search_results_model.dart';
 import 'package:stocks/widgets/search_list_tile.dart';
 
+import '../utils/search_delay.dart';
+
 class SearchField extends StatefulWidget {
   const SearchField({super.key});
 
@@ -15,6 +17,8 @@ class _SearchFieldState extends State<SearchField> {
   final SearchController searchController = SearchController();
 
   Future<SearchResults>? search;
+  // final Debouncer onSearchDebouncer =
+  //     Debouncer(delay: const Duration(milliseconds: 1000));
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -44,11 +48,17 @@ class _SearchFieldState extends State<SearchField> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CupertinoActivityIndicator();
             } else if (snapshot.hasData) {
-              final result = snapshot.data!.bestMatches;
+              final result = snapshot.data?.bestMatches;
               return ListView.builder(
-                itemCount: result!.length,
+                itemCount: result?.length ?? 0,
                 itemBuilder: (context, index) {
-                  return SearchListTile(results: result[index]);
+                  if ((result?.length ?? 0) > 0) {
+                    return SearchListTile(results: result![index]);
+                  } else {
+                    return const Center(
+                      child: Text("No result"),
+                    );
+                  }
                 },
               );
             } else if (!snapshot.hasData) {

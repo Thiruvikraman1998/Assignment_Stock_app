@@ -12,7 +12,7 @@ class SearchListTile extends StatefulWidget {
 }
 
 class _SearchListTileState extends State<SearchListTile> {
-  late CompanyInfo compInfo;
+  //late CompanyInfo compInfo;
   late String compName;
   late String compSymbol;
   bool isSelectedtapped = false;
@@ -27,14 +27,10 @@ class _SearchListTileState extends State<SearchListTile> {
             onPressed: () {
               compName = widget.results.name ??= 'null';
               compSymbol = widget.results.symbol ??= 'null';
+              addToWatchListFromSearch(compName, compSymbol);
               setState(() {
                 isSelectedtapped = !isSelectedtapped;
               });
-              if (isSelectedtapped == false) {
-                addToWatchListFromSearch(compName, compSymbol);
-              } else if (isSelectedtapped == true) {
-                deleteWatchListFromSearch(compInfo);
-              }
             },
             icon: isSelectedtapped
                 ? const Icon(Icons.check)
@@ -57,9 +53,14 @@ class _SearchListTileState extends State<SearchListTile> {
 
     final box = HiveBox.getCompanyInfo();
     await box.add(companyInfo);
+    box.values.map(
+      (e) {
+        debugPrint(e.compName);
+      },
+    );
   }
 
-  Future<void> deleteWatchListFromSearch(CompanyInfo companyInfo) async {
-    companyInfo.delete();
-  }
+  // Future<void> deleteWatchListFromSearch(CompanyInfo companyInfo) async {
+  //   companyInfo.delete();
+  // }
 }
