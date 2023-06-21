@@ -62,7 +62,7 @@ class _SearchFieldState extends State<SearchField> {
                 },
               );
             } else if (!snapshot.hasData) {
-              Center(child: Text("Type something to search"));
+              const Center(child: Text("Type something to search"));
             }
             return const Text("Search here");
           },

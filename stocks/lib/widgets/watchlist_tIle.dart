@@ -22,13 +22,15 @@ class WatchlistTile extends StatelessWidget {
         width: 150,
         child: Row(
           children: [
-            Text(
-              companyInfo.price!,
-              style: const TextStyle(color: Colors.white),
+            const Text(
+              "price",
+              style: TextStyle(color: Colors.white),
             ),
             const Spacer(),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                deleteWatchListFromSearch(companyInfo);
+              },
               icon: const Icon(
                 Icons.delete_forever_outlined,
                 color: Color(0xFFAD4C41),
@@ -38,5 +40,9 @@ class WatchlistTile extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> deleteWatchListFromSearch(CompanyInfo companyInfo) async {
+    companyInfo.delete();
   }
 }

@@ -15,13 +15,13 @@ class WatchListScreen extends StatefulWidget {
 }
 
 class _WatchListScreenState extends State<WatchListScreen> {
-  late Future<List<CompanyInfo>> stockPrice;
-  @override
-  void initState() {
-    stockPrice = _makeApiCall();
-    debugPrint("page changed");
-    super.initState();
-  }
+  // late Future<List<CompanyInfo>> stockPrice;
+  // @override
+  // void initState() {
+  //   stockPrice = _makeApiCall();
+  //   debugPrint("page changed");
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -60,55 +60,54 @@ class _WatchListScreenState extends State<WatchListScreen> {
 
             // Added list of watchlist items
             Expanded(
-              child: FutureBuilder(
-                future: _makeApiCall(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    final data = snapshot.data;
-                    return ListView.builder(
-                      itemCount: data?.length ?? 0,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            WatchlistTile(
-                                companyInfo: data![index], deleteitem: () {}),
-                            const Divider(
-                              thickness: 0.2,
-                              indent: 13,
-                              endIndent: 15,
-                            )
-                          ],
-                        );
-                      },
-                    );
-                  }
-                  return Text("SOme text");
-                },
-              ),
-              // child: ValueListenableBuilder(
-              //   valueListenable: HiveBox.getCompanyInfo().listenable(),
-              //   builder: (context, box, child) {
-              //     final companyinfo = box.values.toList().cast<CompanyInfo>();
-              //     return ListView.builder(
-              //       itemCount: companyinfo.length,
-              //       itemBuilder: (context, index) {
-              //         return Column(
-              //           children: [
-              //             WatchlistTile(
-              //                 companyInfo: companyinfo[index]
-              //                 ,price: ,
-              //                 deleteitem: () {}),
-              //             const Divider(
-              //               thickness: 0.2,
-              //               indent: 13,
-              //               endIndent: 15,
-              //             )
-              //           ],
-              //         );
-              //       },
-              //     );
+              // child: FutureBuilder(
+              //   future: _makeApiCall(),
+              //   builder: (context, snapshot) {
+              //     if (snapshot.hasData) {
+              //       final data = snapshot.data;
+              //       return ListView.builder(
+              //         itemCount: data?.length ?? 0,
+              //         itemBuilder: (context, index) {
+              //           return Column(
+              //             children: [
+              //               WatchlistTile(
+              //                   companyInfo: data![index], deleteitem: () {}),
+              //               const Divider(
+              //                 thickness: 0.2,
+              //                 indent: 13,
+              //                 endIndent: 15,
+              //               )
+              //             ],
+              //           );
+              //         },
+              //       );
+              //     }
+              //     return Text("SOme text");
               //   },
               // ),
+              child: ValueListenableBuilder(
+                valueListenable: HiveBox.getCompanyInfo().listenable(),
+                builder: (context, box, child) {
+                  final companyinfo = box.values.toList().cast<CompanyInfo>();
+                  return ListView.builder(
+                    itemCount: companyinfo.length,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          WatchlistTile(
+                              companyInfo: companyinfo[index],
+                              deleteitem: () {}),
+                          const Divider(
+                            thickness: 0.2,
+                            indent: 13,
+                            endIndent: 15,
+                          )
+                        ],
+                      );
+                    },
+                  );
+                },
+              ),
             )
           ],
         ),
