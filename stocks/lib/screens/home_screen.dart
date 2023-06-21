@@ -12,13 +12,7 @@ class HomeScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: Container(
-        margin: const EdgeInsets.all(10),
-        child: const Column(
-          children: [
-            SearchField(),
-          ],
-        ),
-      ),
+          margin: const EdgeInsets.all(10), child: const SearchField()),
     );
   }
 }
