@@ -2,30 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:stocks/models/hive_boxes.dart';
-import 'package:stocks/models/intraday_model.dart';
 import 'package:stocks/widgets/watchlist_tIle.dart';
 
 import '../functions/intraday_price_fetch.dart';
 import '../models/company_info.dart';
 
-class WatchListScreen extends StatefulWidget {
+class WatchListScreen extends StatelessWidget {
   const WatchListScreen({super.key});
 
   @override
-  State<WatchListScreen> createState() => _WatchListScreenState();
-}
-
-class _WatchListScreenState extends State<WatchListScreen> {
-  @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: const Color(0xff2C2E3B),
       appBar: AppBar(
-        backgroundColor: const Color(0xff2C2E3B),
         title: const Text(
           'Watchlist',
-          style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
       ),
@@ -45,9 +35,13 @@ class _WatchListScreenState extends State<WatchListScreen> {
                       return FutureBuilder(
                         future: fetchStockData(companyinfo[index].compSymbol!),
                         builder: (context, snapshot) {
-                          if (snapshot.hasData) {
+                          if (!snapshot.hasData) {
+                            return const Center(
+                              child: CupertinoActivityIndicator(),
+                            );
+                          } else if (snapshot.hasData) {
                             final price =
-                                snapshot.data!.timeSeries.values.first.close;
+                                snapshot.data?.timeSeries.values.first.close;
                             return Column(
                               children: [
                                 WatchlistTile(
@@ -62,7 +56,7 @@ class _WatchListScreenState extends State<WatchListScreen> {
                               ],
                             );
                           }
-                          return const Text('0.00');
+                          return const Text('');
                         },
                       );
                     },

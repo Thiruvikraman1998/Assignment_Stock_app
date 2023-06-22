@@ -49,7 +49,6 @@ class _SearchListTileState extends State<SearchListTile> {
 
   Future<void> addToWatchListFromSearch(
       String companyName, String companySymbol) async {
-    debugPrint('$compName, $companySymbol');
     final companyInfo = CompanyInfo()
       ..compName = companyName
       ..compSymbol = companySymbol;
@@ -58,10 +57,5 @@ class _SearchListTileState extends State<SearchListTile> {
     if (!box.values.contains(companyInfo)) {
       await box.add(companyInfo);
     }
-    box.values.map(
-      (e) {
-        debugPrint(e.compName);
-      },
-    );
   }
 }

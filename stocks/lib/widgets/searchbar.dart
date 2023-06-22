@@ -4,8 +4,6 @@ import 'package:stocks/functions/search_api_fetch.dart';
 import 'package:stocks/models/search_results_model.dart';
 import 'package:stocks/widgets/search_list_tile.dart';
 
-import '../utils/search_delay.dart';
-
 class SearchField extends StatefulWidget {
   const SearchField({super.key});
 
@@ -64,7 +62,7 @@ class _SearchFieldState extends State<SearchField> {
             } else if (!snapshot.hasData) {
               const Center(child: Text("Type something to search"));
             }
-            return const Text("Search here");
+            return const Text('');
           },
         ))
       ],
