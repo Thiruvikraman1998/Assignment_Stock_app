@@ -1,35 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:stocks/models/company_info.dart';
 
-class WatchlistTile extends StatelessWidget {
+class WatchlistTile extends StatefulWidget {
   final CompanyInfo companyInfo;
-  final Function deleteitem;
-  const WatchlistTile(
-      {super.key, required this.companyInfo, required this.deleteitem});
+  final double companyPrice;
+  //final Future<StockData?> stockPrice;
 
+  const WatchlistTile(
+      {super.key, required this.companyInfo, required this.companyPrice});
+
+  @override
+  State<WatchlistTile> createState() => _WatchlistTileState();
+}
+
+class _WatchlistTileState extends State<WatchlistTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-        companyInfo.compSymbol!,
+        widget.companyInfo.compSymbol!,
         style: const TextStyle(color: Colors.white),
       ),
       subtitle: Text(
-        companyInfo.compName!,
+        widget.companyInfo.compName!,
         style: const TextStyle(color: Colors.white),
       ),
       trailing: SizedBox(
-        width: 150,
+        width: 130,
         child: Row(
           children: [
-            const Text(
-              "price",
-              style: TextStyle(color: Colors.white),
+            Text(
+              "\$ ${widget.companyPrice.toString()}",
+              style: const TextStyle(color: Colors.white, fontSize: 18),
             ),
             const Spacer(),
             IconButton(
               onPressed: () {
-                deleteWatchListFromSearch(companyInfo);
+                deleteWatchListFromSearch(widget.companyInfo);
               },
               icon: const Icon(
                 Icons.delete_forever_outlined,

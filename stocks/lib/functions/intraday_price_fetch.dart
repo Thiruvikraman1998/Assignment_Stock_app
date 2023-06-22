@@ -16,9 +16,7 @@ Future<StockData?> fetchStockData(String compSymbol) async {
       //debugPrint(response.body);
       final jsonBody = json.decode(response.body);
       debugPrint("jsonBody ${jsonBody}");
-      var sd = StockData.fromJson(jsonBody);
-      debugPrint("Got ${sd.metaData.symbol}");
-      return sd;
+      return StockData.fromJson(jsonBody);
     } else {
       print('Request failed with status: ${response.statusCode}.');
       return null;

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:stocks/models/hive_boxes.dart';
@@ -15,14 +16,6 @@ class WatchListScreen extends StatefulWidget {
 }
 
 class _WatchListScreenState extends State<WatchListScreen> {
-  // late Future<List<CompanyInfo>> stockPrice;
-  // @override
-  // void initState() {
-  //   stockPrice = _makeApiCall();
-  //   debugPrint("page changed");
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -40,51 +33,8 @@ class _WatchListScreenState extends State<WatchListScreen> {
         margin: const EdgeInsets.all(10),
         child: Column(
           children: [
-            // Sort button to sort the watch list items.
-            GestureDetector(
-              onTap: () {},
-              child: const Row(
-                children: [
-                  Text(
-                    'Sort',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Icon(Icons.sort_rounded)
-                ],
-              ),
-            ),
-            const SizedBox(height: 10),
-
             // Added list of watchlist items
             Expanded(
-              // child: FutureBuilder(
-              //   future: _makeApiCall(),
-              //   builder: (context, snapshot) {
-              //     if (snapshot.hasData) {
-              //       final data = snapshot.data;
-              //       return ListView.builder(
-              //         itemCount: data?.length ?? 0,
-              //         itemBuilder: (context, index) {
-              //           return Column(
-              //             children: [
-              //               WatchlistTile(
-              //                   companyInfo: data![index], deleteitem: () {}),
-              //               const Divider(
-              //                 thickness: 0.2,
-              //                 indent: 13,
-              //                 endIndent: 15,
-              //               )
-              //             ],
-              //           );
-              //         },
-              //       );
-              //     }
-              //     return Text("SOme text");
-              //   },
-              // ),
               child: ValueListenableBuilder(
                 valueListenable: HiveBox.getCompanyInfo().listenable(),
                 builder: (context, box, child) {
@@ -92,17 +42,28 @@ class _WatchListScreenState extends State<WatchListScreen> {
                   return ListView.builder(
                     itemCount: companyinfo.length,
                     itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          WatchlistTile(
-                              companyInfo: companyinfo[index],
-                              deleteitem: () {}),
-                          const Divider(
-                            thickness: 0.2,
-                            indent: 13,
-                            endIndent: 15,
-                          )
-                        ],
+                      return FutureBuilder(
+                        future: fetchStockData(companyinfo[index].compSymbol!),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            final price =
+                                snapshot.data!.timeSeries.values.first.close;
+                            return Column(
+                              children: [
+                                WatchlistTile(
+                                  companyInfo: companyinfo[index],
+                                  companyPrice: price,
+                                ),
+                                const Divider(
+                                  thickness: 0.2,
+                                  indent: 13,
+                                  endIndent: 15,
+                                )
+                              ],
+                            );
+                          }
+                          return const Text('0.00');
+                        },
                       );
                     },
                   );
@@ -113,24 +74,5 @@ class _WatchListScreenState extends State<WatchListScreen> {
         ),
       ),
     );
-  }
-
-  Future<List<CompanyInfo>> _makeApiCall() async {
-    List<CompanyInfo> info = [];
-    var watchlist = HiveBox.getCompanyInfo().values.toList();
-    var responses = await Future.wait(watchlist.map((e) {
-      return fetchStockData(e.compSymbol!);
-    }).toList());
-
-    for (int i = 0; i < watchlist.length; i++) {
-      info.add(
-        CompanyInfo(
-          compName: watchlist[i].compName,
-          compSymbol: watchlist[i].compSymbol,
-          price: responses[i]?.timeSeries.values.first.close.toString(),
-        ),
-      );
-    }
-    return info;
   }
 }

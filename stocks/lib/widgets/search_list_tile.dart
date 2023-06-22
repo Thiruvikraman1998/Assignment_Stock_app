@@ -27,7 +27,9 @@ class _SearchListTileState extends State<SearchListTile> {
             onPressed: () {
               compName = widget.results.name ??= 'null';
               compSymbol = widget.results.symbol ??= 'null';
+              debugPrint(compName);
               addToWatchListFromSearch(compName, compSymbol);
+              debugPrint(compSymbol);
               setState(() {
                 isSelectedtapped = !isSelectedtapped;
               });
@@ -46,13 +48,16 @@ class _SearchListTileState extends State<SearchListTile> {
   }
 
   Future<void> addToWatchListFromSearch(
-      String companyName, String commpanySymbol) async {
+      String companyName, String companySymbol) async {
+    debugPrint('$compName, $companySymbol');
     final companyInfo = CompanyInfo()
       ..compName = companyName
-      ..compSymbol = commpanySymbol;
+      ..compSymbol = companySymbol;
 
     final box = HiveBox.getCompanyInfo();
-    await box.add(companyInfo);
+    if (!box.values.contains(companyInfo)) {
+      await box.add(companyInfo);
+    }
     box.values.map(
       (e) {
         debugPrint(e.compName);
